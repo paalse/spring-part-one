@@ -1,5 +1,6 @@
 package ru.paalse;
 
+import ru.paalse.persist.User;
 import ru.paalse.persist.UserRepository;
 
 import javax.servlet.ServletException;

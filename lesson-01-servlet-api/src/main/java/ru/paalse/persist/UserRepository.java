@@ -22,6 +22,7 @@ public class UserRepository {
 
     public void insert(User user) {
         long id = identity.incrementAndGet();
+        user.setId(id);
         userMap.put(id, user);
     }
 
