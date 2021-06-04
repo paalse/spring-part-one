@@ -1,59 +1,60 @@
 package ru.paalse.persist;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class ProductRepository {
+public class UserRepository {
 
     private EntityManagerFactory emFactory = null;
 
-    public ProductRepository(EntityManagerFactory emFactory) {
+    public UserRepository(EntityManagerFactory emFactory) {
         this.emFactory = emFactory;
     }
 
     /**
-     * Поиск продукта по ID
+     * Поиск пользователя по ID
      *
      * @param id
      * @return
      */
-    public Product findById(Long id) {
-        return executeForEntityManager(em -> em.find(Product.class, id));
+    public User findById(Long id) {
+        return executeForEntityManager(em -> em.find(User.class, id));
     }
 
     /**
-     * Получение всего списка продуктов
+     * Получение всего списка пользователей
      *
      * @return
      */
-    public List<Product> findAll() {
-        return executeForEntityManager(em -> em.createQuery("from Product", Product.class).getResultList());
+    public List<User> findAll() {
+        return executeForEntityManager(em -> em.createQuery("from User", User.class).getResultList());
     }
 
     /**
-     * Удаление продукта по ID
+     * Удаление пользователя по ID
      *
      * @param id
      */
     public void deleteById(Long id) {
         executeInTransaction(em -> {
-            Product product = em.find(Product.class, id);
-            if (product != null) {
-                em.remove(product);
+            User user = em.find(User.class, id);
+            if (user != null) {
+                em.remove(user);
             }
         });
     }
 
     /**
-     * Сохранение нового либо изменение имеющегося продукта
+     * Сохранение нового либо изменение имеющегося пользователя
      *
-     * @param product
+     * @param user
      * @return
      */
-    public void saveOrUpdate(Product product) {
-        executeForEntityManager(em -> em.merge(product));
+    public void saveOrUpdate(User user) {
+        executeForEntityManager(em -> em.merge(user));
     }
 
     /**

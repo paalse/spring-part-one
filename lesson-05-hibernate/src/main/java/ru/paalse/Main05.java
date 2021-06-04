@@ -11,7 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import java.util.List;
 
-public class Main {
+public class Main05 {
     public static void main(String[] args) {
 //        SessionFactory sessionFactory = new Configuration()
 //                .configure("hibernate.cfg.xml")
@@ -103,21 +103,21 @@ public class Main {
 
         ProductRepository productRepository = new ProductRepository(emFactory);
 //
-//        Product product1 = new Product("Product1", 10);
-//        System.out.println(product1);
-//        Product product2 = new Product("Product2", 20);
-//        System.out.println(product2);
-//        Product product3 = new Product("Product3", 30);
-//        System.out.println(product3);
-//        productRepository.saveOrUpdate(product1);
-//        productRepository.saveOrUpdate(product2);
-//        productRepository.saveOrUpdate(product3);
+        Product product4 = new Product("Product4", 10);
+        System.out.println(product4);
+        Product product5= new Product("Product5", 20);
+        System.out.println(product5);
+        Product product6 = new Product("Product6", 30);
+        System.out.println(product6);
+        productRepository.saveOrUpdate(product4);
+        productRepository.saveOrUpdate(product5);
+        productRepository.saveOrUpdate(product6);
 
 
 
-        Product product = em.find(Product.class, 1L);
-        product.setPrice(55);
-        productRepository.saveOrUpdate(product);
+//        Product product = em.find(Product.class, 1L);
+//        product.setPrice(55);
+//        productRepository.saveOrUpdate(product);
 
         System.out.println(productRepository.findAll());
 
