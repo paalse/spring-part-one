@@ -18,6 +18,9 @@
 
         <mapping class="ru.paalse.persist.User"/>
         <mapping class="ru.paalse.persist.Product"/>
+        <mapping class="ru.paalse.persist.Contact"/>
+        <mapping class="ru.paalse.persist.Role"/>
+        <mapping class="ru.paalse.persist.LineItem"/>
 
     </session-factory>
 </hibernate-configuration>

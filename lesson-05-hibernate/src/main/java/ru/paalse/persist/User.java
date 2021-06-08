@@ -1,12 +1,13 @@
 package ru.paalse.persist;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @NamedQueries({
         @NamedQuery(name = "userByName", query = "from User u where u.username =:username"),
-        @NamedQuery(name="allUsers", query = "from User")
+        @NamedQuery(name = "allUsers", query = "from User")
 })
 public class User {
 
@@ -23,11 +24,21 @@ public class User {
     @Column(length = 512, nullable = false)
     private String password;
 
-    public User(String username) {
-        this.username = username;
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Contact> contacts;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<LineItem> lineItems;
+
 
     public User() {
+    }
+
+    public User(String username) {
+        this.username = username;
     }
 
     public User(String username, String email, String password) {
@@ -66,6 +77,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<LineItem> getLineItems() {
+        return lineItems;
+    }
+
+    public void setLineItems(List<LineItem> lineItems) {
+        this.lineItems = lineItems;
     }
 
     @Override

@@ -9,6 +9,7 @@ import ru.paalse.persist.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Main05 {
@@ -103,11 +104,11 @@ public class Main05 {
 
         ProductRepository productRepository = new ProductRepository(emFactory);
 //
-        Product product4 = new Product("Product4", 10);
+        Product product4 = new Product("Product4", "Описание продукта 4", new BigDecimal(10.00));
         System.out.println(product4);
-        Product product5= new Product("Product5", 20);
+        Product product5= new Product("Product5", "Описание продукта 5", new BigDecimal(20));
         System.out.println(product5);
-        Product product6 = new Product("Product6", 30);
+        Product product6 = new Product("Product6", "Описание продукта 6", new BigDecimal(30));
         System.out.println(product6);
         productRepository.saveOrUpdate(product4);
         productRepository.saveOrUpdate(product5);

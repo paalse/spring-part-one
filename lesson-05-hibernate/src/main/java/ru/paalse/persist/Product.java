@@ -2,9 +2,15 @@ package ru.paalse.persist;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name="products")
+@NamedQueries({
+        @NamedQuery(name = "productByTitle", query = "from Product p where p.title =:title"),
+        @NamedQuery(name = "allProducts", query = "from Product")
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
@@ -14,14 +20,22 @@ public class Product {
     private String title;
 
     @Column
-    private int price;
+    private String description;
 
-    public Product(String title, int price) {
-        this.title = title;
-        this.price = price;
-    }
+    @Column
+    private BigDecimal price;
+
+    @OneToMany(mappedBy = "product")
+    private List<LineItem> lineItems;
 
     public Product() {  }
+
+
+    public Product(String title, String description, BigDecimal price) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+    }
 
     public Long getId() {
         return id;
@@ -39,12 +53,28 @@ public class Product {
         this.title = title;
     }
 
-    public int getPrice() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public List<LineItem> getLineItems() {
+        return lineItems;
+    }
+
+    public void setLineItems(List<LineItem> lineItems) {
+        this.lineItems = lineItems;
     }
 
     @Override
