@@ -52,8 +52,8 @@
 
                 <div class="form-group">
                     <label>Price</label>
-                    <input type="BigNumber" th:field="*{price}" class="form-control" id="price" name="price" placeholder="Enter price">
-                    <p class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+                    <input type="text" th:field="*{price}" class="form-control" id="price" name="price" placeholder="Enter price">
+                    <p class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price is null.</p>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

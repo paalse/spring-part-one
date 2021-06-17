@@ -9,6 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.paalse.persist.Product;
 import ru.paalse.persist.ProductRepository;
+import ru.paalse.service.ProductRepr;
+import ru.paalse.service.ProductService;
+import ru.paalse.service.UserService;
 
 import javax.validation.Valid;
 
@@ -18,17 +21,17 @@ public class ProductController {
 
     public static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    private ProductRepository productRepository;
+    private final ProductService productService;
 
     @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
     public String listPage(Model model){
         logger.info("List products page requested");
-        model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("products", productService.findAll());
         return "product";
     }
 
@@ -36,26 +39,22 @@ public class ProductController {
     public String editPage(@PathVariable("id") Long id, Model model) {
         logger.info("Edit page product for id{} requested", id);
 
-        model.addAttribute("product", productRepository.findById(id));
+        model.addAttribute("product", productService.findById(id)
+                .orElseThrow(NotFoundException::new));
         return "product_form";
     }
 
     @PostMapping("/update")
-    public String update(@Valid Product product, BindingResult result){
+    public String update(@Valid  @ModelAttribute("product") ProductRepr product, BindingResult result){
         logger.info("Update endpoint requested");
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "product_form";
-
         }
 
-        if (product.getId() != 0) {
-            logger.info("Updating product with id{}", product.getId());
-            productRepository.update(product);
-        } else {
-            logger.info("Creating new product");
-            productRepository.insert(product);
-        }
+        logger.info("Updating product with id{}", product.getId());
+        productService.save(product);
+
         return "redirect:/product";
     }
 
@@ -75,8 +74,7 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public String remove(@PathVariable("id") Long id) {
         logger.info("Delete product with id {} ", id);
-
-        productRepository.delete(id);
+        productService.delete(id);
         return "redirect:/product";
     }
 }

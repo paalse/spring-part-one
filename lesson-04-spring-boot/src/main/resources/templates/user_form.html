@@ -45,6 +45,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" th:field="*{age}" class="form-control" id="age" name="username" placeholder="Enter age user">
+                    <p class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Empty age.</p>
+                </div>
+
+                <div class="form-group">
                     <label>Email</label>
                     <input type="text" th:field="*{email}" class="form-control" id="email" name="email" placeholder="Enter email">
                     <p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Wrong email format.</p>
